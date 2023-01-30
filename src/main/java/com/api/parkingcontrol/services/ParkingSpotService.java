@@ -25,4 +25,19 @@ public class ParkingSpotService {
 
 		return parkingSpotRepository.save(parkingSpotModel);
 	}
+
+	public boolean existsByLicensePlateCar(String licensePlateCar) {
+		// TODO Auto-generated method stub
+		return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
+	}
+
+	public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
+		// TODO Auto-generated method stub
+		return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
+	}
+
+	public boolean existsByApartmentAndBlock(String apartment, String block) {
+		// TODO Auto-generated method stub
+		return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
+	}
 }

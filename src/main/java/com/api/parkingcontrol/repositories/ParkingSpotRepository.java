@@ -12,5 +12,10 @@ import com.api.parkingcontrol.models.ParkingSpotModel;
 // deletar entradas no banco de dados
 @Repository // nao obrigatoria a notacao @Repository
 public interface ParkingSpotRepository extends JpaRepository<ParkingSpotModel, UUID> {
+	
+	public boolean existsByLicensePlateCar(String licensePlateCar);
+	
+	public boolean existsByParkingSpotNumber(String parkingSpotNumber);
 
+	public boolean existsByApartmentAndBlock(String apartment, String block);
 }

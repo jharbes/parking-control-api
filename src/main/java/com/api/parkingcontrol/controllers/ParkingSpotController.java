@@ -36,6 +36,15 @@ public class ParkingSpotController {
 	// @NotBlank e @Size
 	@PostMapping
 	public ResponseEntity<Object> saveParkingSlot(@RequestBody @Valid ParkingSpotDto parkingSpotDto) {
+		if (parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar()))
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Essa placa de carro já está cadastrada!");
+
+		if (parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber()))
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Esse número de vaga já está em utilização!");
+
+		if (parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock()))
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe vaga registrada para esse apartamento!");
+
 		// o var declara a variavel sem que seja necessario especificar o tipo, ele
 		// mesmo atribui
 		var parkingSpotModel = new ParkingSpotModel();
