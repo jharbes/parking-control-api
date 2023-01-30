@@ -1,5 +1,7 @@
 package com.api.parkingcontrol.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.api.parkingcontrol.models.ParkingSpotModel;
@@ -39,5 +41,10 @@ public class ParkingSpotService {
 	public boolean existsByApartmentAndBlock(String apartment, String block) {
 		// TODO Auto-generated method stub
 		return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
+	}
+
+	public List<ParkingSpotModel> findAll() {
+		// TODO Auto-generated method stub
+		return parkingSpotRepository.findAll();
 	}
 }

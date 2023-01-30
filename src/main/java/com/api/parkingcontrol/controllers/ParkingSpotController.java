@@ -2,11 +2,13 @@ package com.api.parkingcontrol.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,5 +58,11 @@ public class ParkingSpotController {
 		parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
+	}
+	
+	// implementacao do metodo get pra buscar toda a lista de vagas
+	@GetMapping
+	public ResponseEntity<List<ParkingSpotModel>> getAllParkingSlots(){
+		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
 	}
 }
