@@ -1,12 +1,16 @@
 package com.api.parkingcontrol.controllers;
 
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,8 +71,9 @@ public class ParkingSpotController {
 
 	// implementacao do metodo get pra buscar toda a lista de vagas
 	@GetMapping
-	public ResponseEntity<List<ParkingSpotModel>> getAllParkingSlots() {
-		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
+	public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSlots(
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
 	}
 
 	// implementacao do metodo get pra buscar por id
@@ -105,15 +110,15 @@ public class ParkingSpotController {
 
 		// primeiro metodo para atualizacao dos dados em banco de dados
 		/*
-		parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
-		parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
-		parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
-		parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
-		parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
-		parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
-		parkingSpotModel.setApartment(parkingSpotDto.getApartment());
-		parkingSpotModel.setBlock(parkingSpotDto.getBlock());
-		*/
+		 * parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
+		 * parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
+		 * parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
+		 * parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
+		 * parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
+		 * parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
+		 * parkingSpotModel.setApartment(parkingSpotDto.getApartment());
+		 * parkingSpotModel.setBlock(parkingSpotDto.getBlock());
+		 */
 
 		// segundo metodo para atualizacao dos dados em banco de dados
 		BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
