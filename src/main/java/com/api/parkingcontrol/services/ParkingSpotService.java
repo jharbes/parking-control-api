@@ -23,7 +23,7 @@ public class ParkingSpotService {
 
 	// é interessante utilizar o bean transactional para que caso haja algum erro na
 	// transacao o proprio sistema desfaça a operação impedindo de se obter
-	// inconsistencias e/ou dados quebrados no banco de dados 
+	// inconsistencias e/ou dados quebrados no banco de dados
 	@Transactional
 	public Object save(ParkingSpotModel parkingSpotModel) {
 
@@ -31,27 +31,30 @@ public class ParkingSpotService {
 	}
 
 	public boolean existsByLicensePlateCar(String licensePlateCar) {
-		// TODO Auto-generated method stub
 		return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
 	}
 
 	public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
-		// TODO Auto-generated method stub
 		return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
 	}
 
 	public boolean existsByApartmentAndBlock(String apartment, String block) {
-		// TODO Auto-generated method stub
 		return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
 	}
 
 	public List<ParkingSpotModel> findAll() {
-		// TODO Auto-generated method stub
 		return parkingSpotRepository.findAll();
 	}
 
 	public Optional<ParkingSpotModel> findById(UUID id) {
-		// TODO Auto-generated method stub
 		return parkingSpotRepository.findById(id);
+	}
+
+	// é interessante utilizar o bean transactional para que caso haja algum erro na
+	// transacao o proprio sistema desfaça a operação impedindo de se obter
+	// inconsistencias e/ou dados quebrados no banco de dados
+	@Transactional
+	public void delete(ParkingSpotModel parkingSpotModel) {
+		parkingSpotRepository.delete(parkingSpotModel);
 	}
 }

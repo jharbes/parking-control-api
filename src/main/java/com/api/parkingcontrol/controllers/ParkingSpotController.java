@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,20 +63,32 @@ public class ParkingSpotController {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
 	}
-	
+
 	// implementacao do metodo get pra buscar toda a lista de vagas
 	@GetMapping
-	public ResponseEntity<List<ParkingSpotModel>> getAllParkingSlots(){
+	public ResponseEntity<List<ParkingSpotModel>> getAllParkingSlots() {
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
 	}
-	
+
 	// implementacao do metodo get pra buscar por id
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getOneParkingSlot(@PathVariable(value = "id") UUID id){
-		Optional<ParkingSpotModel> parkingSpotModelOptional=parkingSpotService.findById(id);
+	public ResponseEntity<Object> getOneParkingSlot(@PathVariable(value = "id") UUID id) {
+		Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
 		if (!parkingSpotModelOptional.isPresent())
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga de garagem não encontrada!");
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotModelOptional.get());
+	}
+
+	// implementacao do metodo delete para apagar registro no banco por id
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteParkingSlot(@PathVariable(value = "id") UUID id) {
+		Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
+		if (!parkingSpotModelOptional.isPresent())
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga de garagem não encontrada!");
+
+		parkingSpotService.delete(parkingSpotModelOptional.get());
+
+		return ResponseEntity.status(HttpStatus.OK).body("Vaga de garagem deletada com sucesso!");
 	}
 }
