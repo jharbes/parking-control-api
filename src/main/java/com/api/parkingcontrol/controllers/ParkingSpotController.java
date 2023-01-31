@@ -102,6 +102,9 @@ public class ParkingSpotController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga de garagem não encontrada!");
 
 		var parkingSpotModel = parkingSpotModelOptional.get();
+
+		// primeiro metodo para atualizacao dos dados em banco de dados
+		/*
 		parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
 		parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
 		parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
@@ -110,6 +113,12 @@ public class ParkingSpotController {
 		parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
 		parkingSpotModel.setApartment(parkingSpotDto.getApartment());
 		parkingSpotModel.setBlock(parkingSpotDto.getBlock());
+		*/
+
+		// segundo metodo para atualizacao dos dados em banco de dados
+		BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+		parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
+		parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
 
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
 	}
